@@ -22,14 +22,14 @@ class Ship:
         # Flag de movimento
         self.moving_right = False
         self.moving_left = False
-    
+
     def update(self):
         """ Atualiza a posição da espaçonave de acordo com a flag de movimento """
 
         # Atualiza o valor do centro da espaçonave, e não do retângulo
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.center += self.ship_settings.ship_speed_factor
-        
+
         if self.moving_left and self.rect.left > self.screen_rect.left:
             self.center -= self.ship_settings.ship_speed_factor
 

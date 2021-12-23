@@ -1,7 +1,9 @@
 import pygame
+from pygame.sprite import Group
 
 from config.settings import Settings
-from ships.ship import Ship
+from classes.ship import Ship
+from classes.bullets import Bullet
 import game_functions.functions as gm_function
 
 def run_game():
