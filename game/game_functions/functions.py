@@ -10,16 +10,29 @@ def check_events(ship):
         match event.type:
             case pygame.QUIT:
                 sys.exit()
+
             case pygame.KEYDOWN:
-                match event.key:
-                    case pygame.K_RIGHT:
-                        ship.moving_right = True
-                    case pygame.K_LEFT:
-                        ship.moving_left = True
+                check_keydown_events(event, ship)
+            
             case pygame.KEYUP:
-                ship.moving_right = False
-                ship.moving_left = False
-                
+                check_keyup_events(event, ship)
+
+
+def check_keydown_events(event, ship):
+    match event.key:
+        case pygame.K_RIGHT:
+            ship.moving_right = True
+        case pygame.K_LEFT:
+            ship.moving_left = True
+
+
+def check_keyup_events(event, ship):
+    match event.key:
+        case pygame.K_RIGHT:
+            ship.moving_right = False
+        case pygame.K_LEFT:
+            ship.moving_left = False
+
 
 def update_screen(settings, screen, ship):
     # Redesenha a tela  a cada passagem do laço

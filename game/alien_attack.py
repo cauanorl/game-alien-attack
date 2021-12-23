@@ -15,7 +15,7 @@ def run_game():
     pygame.display.set_caption('Alien Attack')
 
     # Cria uma espaçonave
-    ship = Ship(screen)
+    ship = Ship(screen, game_settings)
 
     # Inicia o laço principal do jogo
     while True:
