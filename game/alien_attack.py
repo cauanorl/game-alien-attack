@@ -21,8 +21,8 @@ def run_game():
     while True:
 
         # Observa eventos de teclado e de mouse
-        gm_function.check_events()
-        
+        gm_function.check_events(ship)
+        ship.update()
         gm_function.update_screen(game_settings, screen, ship)
 
 run_game()
