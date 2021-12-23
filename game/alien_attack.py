@@ -1,4 +1,3 @@
-import sys
 import pygame
 
 from config.settings import Settings
@@ -24,11 +23,6 @@ def run_game():
         # Observa eventos de teclado e de mouse
         gm_function.check_events()
         
-        # Redesenha a tela  a cada passagem do laço
-        screen.fill(game_settings.bg_color)
-        ship.blitme()
-        
-        # Deixa a tela mais recente visivel
-        pygame.display.flip()
+        gm_function.update_screen(game_settings, screen, ship)
 
 run_game()
