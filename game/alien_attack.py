@@ -3,7 +3,8 @@ from pygame.sprite import Group
 
 from config.settings import Settings
 from classes.ship import Ship
-from classes.bullets import Bullet
+
+# from classes.bullets import Bullet
 import game_functions.functions as gm_function
 
 def run_game():
@@ -19,12 +20,20 @@ def run_game():
     # Cria uma espaçonave
     ship = Ship(screen, game_settings)
 
+    # Cria um grupo no qual serão armazenados os projéteis
+    bullets = Group()
+
     # Inicia o laço principal do jogo
     while True:
 
         # Observa eventos de teclado e de mouse
-        gm_function.check_events(ship)
+        gm_function.check_events(game_settings, screen, ship, bullets)
         ship.update()
-        gm_function.update_screen(game_settings, screen, ship)
+        bullets.update()
+
+        # Livra-se dos projéteis  q ue desapareceram
+        gm_function.update_bullets(bullets)
+
+        gm_function.update_screen(game_settings, screen, ship, bullets)
 
 run_game()
