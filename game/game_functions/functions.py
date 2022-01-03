@@ -1,5 +1,6 @@
 import sys
 import pygame
+from time import sleep
 
 from classes.bullets import Bullet
 from classes.alien import Alien
@@ -126,10 +127,19 @@ def create_fleet(settings, screen, aliens, ship):
             create_alien(settings, screen, aliens, alien_number, row_number)
 
 
-def update_aliens(aliens, settings):
-    """ Atualiza a posição de todos os alienígenas da frota """
+def update_aliens(aliens, settings, ship, stats, screen, bullets):
+    """
+     Atualiza a posição de todos os alienígenas da frota
+     E muda de direção se uma borda foi alcançada
+    """
     check_fleet_edges(settings, aliens)
     aliens.update()
+
+    # Verifica se houve colisões entre o alienígena e a espaçonave
+    if pygame.sprite.spritecollideany(ship, aliens):
+        ship_hit(settings, stats, screen, ship, aliens, bullets)
+    
+    check_aliens_bottom(settings, stats, screen, ship, aliens, bullets)
 
 
 def check_fleet_edges(settings, aliens):
@@ -145,3 +155,32 @@ def change_fleet_direction(settings, aliens):
     for alien in aliens.sprites():
         alien.rect.y += settings.fleet_drop_speed
     settings.fleet_direction *= -1
+
+
+def ship_hit(settings, stats, screen, ship, aliens, bullets):
+    """ Reponde a colisão entre uma nave e um alien """
+    if stats.ships_left > 0:
+        # Decrementa ships_left
+        stats.ships_left -= 1
+
+        # Esvazia a lista de aliens e de projéteis
+        aliens.empty()
+        bullets.empty()
+
+        # Cria uma nova frota e centraliza a espaçonave
+        create_fleet(settings, screen, aliens, ship)
+        ship.center_ship()
+
+        # Faz uma pausa
+        sleep(0.5)
+    else:
+        stats.game_active = False
+
+
+def check_aliens_bottom(settings, stats, screen, ship, aliens, bullets):
+    """ Verifica se algum alienígena alcançou a parte inferior da tela """
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            ship_hit(settings, stats, screen, ship, aliens, bullets)
+            break
