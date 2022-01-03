@@ -23,6 +23,12 @@ def run_game():
     # Cria um grupo no qual serão armazenados os projéteis
     bullets = Group()
 
+    # Cria um grupo de aliens
+    aliens = Group()
+
+    # Cria a frota de alienígenas
+    gm_function.create_fleet(game_settings, screen, aliens, ship)
+
     # Inicia o laço principal do jogo
     while True:
 
@@ -31,9 +37,11 @@ def run_game():
         ship.update()
         bullets.update()
 
-        # Livra-se dos projéteis  q ue desapareceram
+        # Livra-se dos projéteis que desapareceram
         gm_function.update_bullets(bullets)
-
-        gm_function.update_screen(game_settings, screen, ship, bullets)
+        gm_function.update_aliens(aliens, game_settings)
+        gm_function.update_screen(
+            game_settings, screen, ship, bullets, aliens
+        )
 
 run_game()
