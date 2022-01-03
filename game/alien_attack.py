@@ -28,17 +28,17 @@ def run_game():
 
     # Cria a frota de alienígenas
     gm_function.create_fleet(game_settings, screen, aliens, ship)
-
+ 
     # Inicia o laço principal do jogo
     while True:
 
-        # Observa eventos de teclado e de mouse
+        # Observa eventos de teclado e de mouse 
         gm_function.check_events(game_settings, screen, ship, bullets)
         ship.update()
         bullets.update()
 
         # Livra-se dos projéteis que desapareceram
-        gm_function.update_bullets(bullets)
+        gm_function.update_bullets(bullets, aliens, screen, ship, game_settings)
         gm_function.update_aliens(aliens, game_settings)
         gm_function.update_screen(
             game_settings, screen, ship, bullets, aliens

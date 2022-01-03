@@ -3,6 +3,7 @@ import pygame
 
 from classes.bullets import Bullet
 from classes.alien import Alien
+from config.settings import Settings
 
 
 def check_events(settings, screen, ship, bullets):
@@ -57,11 +58,24 @@ def update_screen(settings, screen, ship, bullets, aliens):
     pygame.display.flip()
 
 
-# Livra-se dos projéteis  que desapareceram
-def update_bullets(bullets):
+def update_bullets(bullets, aliens, screen, ship, settings):
+    """ Atualiza a posição dos projéteis  e se livra dos projéteis antigos """
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+
+    check_bullet_alien_collisions(settings, screen, ship, aliens, bullets)
+
+
+def check_bullet_alien_collisions(settings, screen, ship, aliens, bullets):
+    """ Responde a colisões de projéteis e alienígenas """
+    # Remove qualquer projétil e alien que tenha colidido
+    collisions = pygame.sprite.groupcollide(aliens, bullets, True, True)
+
+    if len(aliens) == 0:
+        # Destrói os projéteis existentes e cria uma nova frota
+        bullets.empty()
+        create_fleet(settings, screen, aliens, ship)
 
 
 def fire_bullet(bullets, settings, screen, ship):
