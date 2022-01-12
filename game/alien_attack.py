@@ -53,7 +53,7 @@ def run_game():
             gm_function.update_bullets(bullets, aliens, screen, ship, game_settings, stats, sb)
 
             gm_function.update_aliens(
-                aliens, game_settings, ship, stats, screen, bullets
+                aliens, game_settings, ship, stats, screen, bullets, sb
             )
 
         gm_function.update_screen(

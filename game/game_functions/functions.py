@@ -72,6 +72,7 @@ def start_game(stats, aliens, bullet, settings, screen, ship, sb):
     sb.prep_score()
     sb.prep_high_score()
     sb.prep_level()
+    sb.prep_ships()
 
     # Esvazia a lista de aliens e de projéteis
     aliens.empty()
@@ -176,7 +177,7 @@ def create_fleet(settings, screen, aliens, ship):
             create_alien(settings, screen, aliens, alien_number, row_number)
 
 
-def update_aliens(aliens, settings, ship, stats, screen, bullets):
+def update_aliens(aliens, settings, ship, stats, screen, bullets, sb):
     """
      Atualiza a posição de todos os alienígenas da frota
      E muda de direção se uma borda foi alcançada
@@ -186,9 +187,9 @@ def update_aliens(aliens, settings, ship, stats, screen, bullets):
 
     # Verifica se houve colisões entre o alienígena e a espaçonave
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(settings, stats, screen, ship, aliens, bullets)
+        ship_hit(settings, stats, screen, ship, aliens, bullets, sb)
     
-    check_aliens_bottom(settings, stats, screen, ship, aliens, bullets)
+    check_aliens_bottom(settings, stats, screen, ship, aliens, bullets, sb)
 
 
 def check_fleet_edges(settings, aliens):
@@ -206,11 +207,14 @@ def change_fleet_direction(settings, aliens):
     settings.fleet_direction *= -1
 
 
-def ship_hit(settings, stats, screen, ship, aliens, bullets):
+def ship_hit(settings, stats, screen, ship, aliens, bullets, sb):
     """ Reponde a colisão entre uma nave e um alien """
     if stats.ships_left > 0:
         # Decrementa ships_left
         stats.ships_left -= 1
+
+        # Atualiza o painel de pontuações
+        sb.prep_ships()
 
         # Esvazia a lista de aliens e de projéteis
         aliens.empty()
@@ -226,12 +230,12 @@ def ship_hit(settings, stats, screen, ship, aliens, bullets):
         stats.game_active = False
 
 
-def check_aliens_bottom(settings, stats, screen, ship, aliens, bullets):
+def check_aliens_bottom(settings, stats, screen, ship, aliens, bullets, sb):
     """ Verifica se algum alienígena alcançou a parte inferior da tela """
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
-            ship_hit(settings, stats, screen, ship, aliens, bullets)
+            ship_hit(settings, stats, screen, ship, aliens, bullets, sb)
             break
 
 
