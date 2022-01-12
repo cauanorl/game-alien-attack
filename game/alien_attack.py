@@ -25,7 +25,7 @@ def run_game():
 
     # Cria uma instância para armazenar estatísticas do jogo e cria o painel de pontuação
     stats = GameStats(game_settings)
-    sb = Scoreboard(game_settings, screen, stats)
+    sb = Scoreboard(game_settings, screen, stats) 
 
     # Cria uma espaçonave
     ship = Ship(screen, game_settings)
@@ -38,19 +38,19 @@ def run_game():
 
     # Cria a frota de alienígenas
     gm_function.create_fleet(game_settings, screen, aliens, ship)
- 
+   
     # Inicia o laço principal do jogo
     while True:
 
         # Observa eventos de teclado e de mouse 
         gm_function.check_events(
-            game_settings, screen, ship, bullets, stats, play_button, aliens)
+            game_settings, screen, ship, bullets, stats, play_button, aliens, sb)
 
         if stats.game_active:
             bullets.update()
             ship.update()
             # Livra-se dos projéteis que desapareceram 
-            gm_function.update_bullets(bullets, aliens, screen, ship, game_settings)
+            gm_function.update_bullets(bullets, aliens, screen, ship, game_settings, stats, sb)
 
             gm_function.update_aliens(
                 aliens, game_settings, ship, stats, screen, bullets
@@ -60,4 +60,4 @@ def run_game():
             game_settings, screen, ship, bullets, aliens, play_button, stats, sb
         )
 
-run_game() 
+run_game()
