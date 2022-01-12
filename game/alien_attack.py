@@ -5,6 +5,7 @@ from config.settings import Settings
 from classes.ship import Ship
 from classes.game_stats import GameStats
 from classes.button import Button
+from classes.scoreboard import Scoreboard
 
 # from classes.bullets import Bullet
 import game_functions.functions as gm_function
@@ -22,8 +23,9 @@ def run_game():
     # Cria o botão Play
     play_button = Button(game_settings, screen, 'Play')
 
-    # Cria uma instância para armazenar dados estatisticos do jogo
+    # Cria uma instância para armazenar estatísticas do jogo e cria o painel de pontuação
     stats = GameStats(game_settings)
+    sb = Scoreboard(game_settings, screen, stats)
 
     # Cria uma espaçonave
     ship = Ship(screen, game_settings)
@@ -41,7 +43,8 @@ def run_game():
     while True:
 
         # Observa eventos de teclado e de mouse 
-        gm_function.check_events(game_settings, screen, ship, bullets, stats, play_button, aliens)
+        gm_function.check_events(
+            game_settings, screen, ship, bullets, stats, play_button, aliens)
 
         if stats.game_active:
             bullets.update()
@@ -54,7 +57,7 @@ def run_game():
             )
 
         gm_function.update_screen(
-            game_settings, screen, ship, bullets, aliens, play_button, stats
+            game_settings, screen, ship, bullets, aliens, play_button, stats, sb
         )
 
-run_game()
+run_game() 

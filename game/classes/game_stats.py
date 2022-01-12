@@ -13,3 +13,4 @@ class GameStats:
          podem mudar durente o jogo
         """
         self.ships_left = self.settings.ship_limit
+        self.score = 0

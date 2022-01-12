@@ -10,13 +10,11 @@ class Settings:
         self.bg_color = (230, 230, 230)
 
         # Configurações da espaçonave
-        self.ship_speed_factor = 0.5
         self.ship_limit = 3
 
         # Configurações dos projeteis
-        self.bullet_speed_factor = 1
         self.bullet_width = 3
-        self.bullet_height = 15
+        self.bullet_height = 15 
         self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 3
 
@@ -24,14 +22,14 @@ class Settings:
         self.fleet_drop_speed = 15
 
         # A taxa com que velocidade o jogo aumenta
-        self.speedup_scale = 0.3
+        self.speedup_scale = 1.1
 
 
         self.initialize_dynamic_settings()
 
     def initialize_dynamic_settings(self):
-        self.ship_speed_factor = 0.5
-        self.alien_speed_factor = 0.2
+        self.ship_speed_factor = 1
+        self.alien_speed_factor = 0.4
         self.bullet_speed_factor = 1
 
         # fleet_direction igual a 1 representa direita e -1 esquerda
@@ -39,4 +37,6 @@ class Settings:
 
     def increase_speed(self):
         """ Aumenta as configurações de velocidade """
-        ...
+        self.ship_speed_factor *= self.speedup_scale
+        self.bullet_speed_factor *= self.speedup_scale
+        self.alien_speed_factor *= self.speedup_scale

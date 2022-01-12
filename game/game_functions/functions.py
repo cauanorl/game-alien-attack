@@ -59,8 +59,10 @@ def check_play_button(stats, button, mouse_x, mouse_y, aliens, bullet, settings,
 
 
 def start_game(stats, aliens, bullet, settings, screen, ship):
-        # Oculta o cursor do mouse
+    # Oculta o cursor do mouse
     pygame.mouse.set_visible(False)
+
+    settings.initialize_dynamic_settings()
 
     # Reinicia os dados estatísticos do jogo
     stats.reset_stats()
@@ -75,7 +77,7 @@ def start_game(stats, aliens, bullet, settings, screen, ship):
     ship.center_ship()
 
 
-def update_screen(settings, screen, ship, bullets, aliens, button, stats):
+def update_screen(settings, screen, ship, bullets, aliens, button, stats, sb):
     # Redesenha a tela  a cada passagem do laço
     screen.fill(settings.bg_color)
     for bullet in bullets.sprites():
@@ -83,6 +85,7 @@ def update_screen(settings, screen, ship, bullets, aliens, button, stats):
 
     ship.blitme()
     aliens.draw(screen)
+    sb.show_score()
     if not stats.game_active:
         button.draw_button()
         pygame.mouse.set_visible(True)
@@ -108,6 +111,7 @@ def check_bullet_alien_collisions(settings, screen, ship, aliens, bullets):
     if len(aliens) == 0:
         # Destrói os projéteis existentes e cria uma nova frota
         bullets.empty()
+        settings.increase_speed()
         create_fleet(settings, screen, aliens, ship)
 
 
