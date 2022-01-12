@@ -3,7 +3,8 @@ class Settings:
 
     def __init__(self):
         """ Inicializando as configurações do jogo """
-        #Configurações de tela
+
+        # Configurações de tela
         self.screen_height = 800
         self.screen_width = 1200
         self.bg_color = (230, 230, 230)
@@ -20,7 +21,22 @@ class Settings:
         self.bullets_allowed = 3
 
         # Configurações dos alienígenas
-        self.alien_speed_factor = 1
-        self.fleet_drop_speed = 10
+        self.fleet_drop_speed = 15
+
+        # A taxa com que velocidade o jogo aumenta
+        self.speedup_scale = 0.3
+
+
+        self.initialize_dynamic_settings()
+
+    def initialize_dynamic_settings(self):
+        self.ship_speed_factor = 0.5
+        self.alien_speed_factor = 0.2
+        self.bullet_speed_factor = 1
+
         # fleet_direction igual a 1 representa direita e -1 esquerda
         self.fleet_direction = 1
+
+    def increase_speed(self):
+        """ Aumenta as configurações de velocidade """
+        ...

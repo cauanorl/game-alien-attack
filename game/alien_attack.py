@@ -4,6 +4,7 @@ from pygame.sprite import Group
 from config.settings import Settings
 from classes.ship import Ship
 from classes.game_stats import GameStats
+from classes.button import Button
 
 # from classes.bullets import Bullet
 import game_functions.functions as gm_function
@@ -17,6 +18,9 @@ def run_game():
         game_settings.screen_height
     ))
     pygame.display.set_caption('Alien Attack')
+
+    # Cria o botão Play
+    play_button = Button(game_settings, screen, 'Play')
 
     # Cria uma instância para armazenar dados estatisticos do jogo
     stats = GameStats(game_settings)
@@ -37,12 +41,12 @@ def run_game():
     while True:
 
         # Observa eventos de teclado e de mouse 
-        gm_function.check_events(game_settings, screen, ship, bullets)
-        bullets.update()
-    
+        gm_function.check_events(game_settings, screen, ship, bullets, stats, play_button, aliens)
+
         if stats.game_active:
+            bullets.update()
             ship.update()
-            # Livra-se dos projéteis que desapareceram
+            # Livra-se dos projéteis que desapareceram 
             gm_function.update_bullets(bullets, aliens, screen, ship, game_settings)
 
             gm_function.update_aliens(
@@ -50,7 +54,7 @@ def run_game():
             )
 
         gm_function.update_screen(
-            game_settings, screen, ship, bullets, aliens
+            game_settings, screen, ship, bullets, aliens, play_button, stats
         )
 
 run_game()
